@@ -26,7 +26,14 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- *
+ * This thread loads information about one artist from Last.fm
+ * ans saves JSON response in a Couchbase bucket.
+ * 
+ * {@link LastfmExporter} uses multiple ArtistExportThreads
+ * to export data from Last.fm
+ * 
+ * Last.fm API - http://www.lastfm.de/api
+ * Couchbase - http://www.couchbase.com/
  *
  * @author Daniel Murygin <dm[at]sernet[dot]de>
  */
@@ -51,10 +58,10 @@ public class ArtistExportThread extends Thread {
      */
     @Override
     public void run() {
-        saveRecentTracksOfFriends(artistName);
+        exportArtists(artistName);
     }
     
-    private void saveRecentTracksOfFriends(String artistName) {                
+    private void exportArtists(String artistName) {                
         if (LOG.isDebugEnabled()) {
             LOG.debug("Loading info of artist: " + artistName + " from lastfm...");
         }

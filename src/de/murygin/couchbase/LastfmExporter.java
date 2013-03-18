@@ -36,7 +36,11 @@ import com.sun.jersey.api.client.Client;
 import de.umass.lastfm.Artist;
 
 /**
- *
+ * LastfmExporter exports information about artists from Last.fm 
+ * and saves JSON responses in a Couchbase bucket.
+ * 
+ * Last.fm API - http://www.lastfm.de/api
+ * Couchbase - http://www.couchbase.com/
  *
  * @author Daniel Murygin <dm[at]sernet[dot]de>
  */
