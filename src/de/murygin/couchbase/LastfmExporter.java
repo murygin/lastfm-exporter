@@ -39,6 +39,9 @@ import de.umass.lastfm.Artist;
  * LastfmExporter exports information about artists from Last.fm 
  * and saves JSON responses in a Couchbase bucket.
  * 
+ * Loading ans saving of artist information is done concurrently by 
+ * multiple {@link ArtistExportThread}s.
+ * 
  * Last.fm API - http://www.lastfm.de/api
  * Couchbase - http://www.couchbase.com/
  *
@@ -79,10 +82,22 @@ public class LastfmExporter {
 
     public static void main(String[] args) {   
         LastfmExporter loader = new LastfmExporter();    
-        loader.saveArtistInfo(artistNameToStart);    
+        loader.exportArtistInfo(artistNameToStart);    
     }
     
-    private void saveArtistInfo(String artistName) {
+    /**
+     * Loads information about one artist from Last.fm
+     * ans saves JSON response in a Couchbase bucket.
+     * 
+     * After that exportArtistInfo is called recursively
+     * for every similar artist.
+     * 
+     * Loading ans saving of artist information is done concurrently by 
+     * multiple ArtistExportThreads.
+     * 
+     * @param artistName The name of an Artist
+     */
+    private void exportArtistInfo(String artistName) {
         if(processedArtists.contains(artistName)) {
             return;
         } else {
@@ -110,7 +125,7 @@ public class LastfmExporter {
          
         }
         for (Artist artist : artistCollection) {
-            saveArtistInfo(artist.getName());
+            exportArtistInfo(artist.getName());
         }
     }
 
