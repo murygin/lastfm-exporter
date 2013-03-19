@@ -59,24 +59,27 @@ public class LastfmExporter {
     
     private ExecutorService taskExecutor;
     
-    Client jerseyClient;
+    Client jerseyClient = null;
     CouchbaseClient cb = null;
     
-    public static Set<String> processedUser = new HashSet<String>();
     public static Set<String> processedArtists= new HashSet<String>();
 
     public LastfmExporter() {
         super();
+        
+        // init Jersey client
         jerseyClient = Client.create();
+        
+        // init CouchbaseClient
         List<URI> uris = new LinkedList<URI>();
         uris.add(URI.create("http://127.0.0.1:8091/pools"));
-
         try {
             cb = new CouchbaseClient(uris, "lastfm", "");
         } catch (Exception e) {
             System.err.println("Error connecting to Couchbase: " + e.getMessage());
         }
         
+        // init thread executer
         taskExecutor = Executors.newFixedThreadPool(maxNumberOfThreads);
     }
 
