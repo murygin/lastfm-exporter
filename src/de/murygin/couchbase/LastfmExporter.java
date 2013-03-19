@@ -15,7 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  * 
  * Contributors:
- *     Daniel Murygin <dm[at]sernet[dot]de> - initial API and implementation
+ *     Daniel Murygin <daniel.murygin[at]gmail[dot]com>
  ******************************************************************************/
 package de.murygin.couchbase;
 
