@@ -51,7 +51,7 @@ public class LastfmExporter {
 
     private static final Logger LOG = Logger.getLogger(LastfmExporter.class);
     
-    public static String key = "040f7b24f14afd8cd5b6385fceba24f7"; //this is the key used in the last.fm API examples online.
+    public static String key = "enter your lasf.fm api key here"; //this is the key used in the last.fm API examples online.
    
     private static String artistNameToStart = "Eminem";
     
