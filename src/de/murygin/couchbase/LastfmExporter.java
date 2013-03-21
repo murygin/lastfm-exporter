@@ -84,7 +84,12 @@ public class LastfmExporter {
     }
 
     public static void main(String[] args) {   
-        LastfmExporter loader = new LastfmExporter();    
+        LastfmExporter loader = new LastfmExporter();
+        
+        // export first artist
+        ArtistExportThread thread = new ArtistExportThread(jerseyClient, cb, artistNameToStart );
+        taskExecutor.execute(thread);
+        
         loader.exportArtistInfo(artistNameToStart);    
     }
     
@@ -115,11 +120,7 @@ public class LastfmExporter {
             LOG.info("Processing artist " + artistName + ", number of similar:  " + artistCollection.size());
         }
         
-        // export artist
-        ArtistExportThread thread = new ArtistExportThread(jerseyClient, cb, artistName);
-        taskExecutor.execute(thread);
-        
-       // export similar artists
+        // export similar artists
         for (Artist artist : artistCollection) {
             String currentArtist = artist.getName(); 
             
